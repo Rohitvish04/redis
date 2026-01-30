@@ -1,16 +1,27 @@
-import { createClient } from 'redis'
+import { createClient } from 'redis';
 
-const Client = createClient({
+// 🔑 Replace these with your Redis Cloud credentials
+const client = createClient({
   socket: {
-    host: 'redis-14595.crce217.ap-south-1-1.ec2.cloud.redislabs.com',
-    port: 14595,
+     host: 'redis-14595.crce217.ap-south-1-1.ec2.cloud.redislabs.com',
+    port: 14595
   },
-  password: '6bbGYqTbaknjLprA7yOUJ9xZAuhqSZE0'
+  password: '6bbGYqTbaknjLprA7yOUJ9xZAuhqSZE0',
 });
 
-client.on('error', (err) =>  console.log('Redis Client Error', err ));
+client.on('error', (err) => console.log('Redis Client Error', err));
 
-await client.connet();
+async function main() {
+  await client.connect();
+
+  console.log('Connected to Redis!');
+
+  // practice commands here
+ 
 
 
-await client.quit();
+    // QUIT the client connection
+  await client.quit();
+}
+
+main();
