@@ -38,6 +38,15 @@ async function main() {
   await client.del('name', 'city');
     console.log('After DEL, Name and City:', await client.get('name', 'city')); // null
 
+   // try expire command
+    await client.set('temp', 'I will expire in 5 seconds');
+    await client.expire('temp', 5);
+    console.log('Temp before expiry:', await client.get('temp'));
+    
+    // wait for 6 seconds
+    await new Promise(resolve => setTimeout(resolve, 6000));
+    console.log('Temp after expiry:', await client.get('temp')); // null        
+    
  
     // QUIT the client connection
   await client.quit();
