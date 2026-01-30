@@ -35,6 +35,22 @@ async function main() {
     await client.set('otp:9101', '777777');
     await client.expire('otp:9101', 15); // Expires in 15 seconds
 
+   // Counter (INCR / DECR) //page views, likes, Rate limiting, etc.
+    await client.set('page:home:views', '0');
+    await client.incr('page:home:views');
+    await client.incr('page:home:views');
+
+    // create counter for about page and increment it 3 times
+    await client.set('page:about:views', '0');
+    await client.incr('page:about:views');
+    await client.incr('page:about:views');
+    await client.incr('page:about:views');
+
+
+    console.log('Home page views:', await client.get('page:home:views')); // 2
+    console.log('About page views:', await client.get('page:about:views')); // 3
+    
+
     console.log('OTP before expiry:', await client.get('otp:1234')); // 99999
     console.log('OTP before expiry:', await client.get('otp:5678')); // 888888
     console.log('OTP before expiry:', await client.get('otp:9101')); // 777777      
