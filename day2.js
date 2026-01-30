@@ -55,6 +55,15 @@ async function main() {
     console.log('OTP before expiry:', await client.get('otp:5678')); // 888888
     console.log('OTP before expiry:', await client.get('otp:9101')); // 777777      
 
+  // Lists (Queues behavior) – queues, notifications, tasks, recent items, etc.
+    await client.lPush('tasks', 'task1');
+    await client.lPush('tasks', 'task2');
+    await client.lPush('tasks', 'task3');
+
+    console.log(await client.lPop('tasks')); // task3
+    console.log(await client.lPop('tasks')); // task2
+    console.log(await client.lPop('tasks')); // task1
+
     // wait for 5 seconds
     await new Promise(resolve => setTimeout(resolve, 5000));
     console.log('OTP after expiry:', await client.get('otp:5678')); // null
