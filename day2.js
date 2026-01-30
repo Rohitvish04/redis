@@ -27,15 +27,29 @@ async function main() {
     console.log(await client.get('user:2:name', 'rohit')); // rohit
     console.log(await client.get('user:2:email', 'rohit@gmail.com')); //
 
-  // Expiration (TTL) – VERY IMPORTANT
+ // Expiration (TTL) – VERY IMPORTANT
     await client.set('otp:1234', '99999');
     await client.expire('otp:1234', 10); // Expires in 10 seconds
-    
+    await client.set('otp:5678', '888888');
+    await client.expire('otp:5678', 5); // Expires in 5 seconds
+    await client.set('otp:9101', '777777');
+    await client.expire('otp:9101', 15); // Expires in 15 seconds
+
     console.log('OTP before expiry:', await client.get('otp:1234')); // 99999
-    
+    console.log('OTP before expiry:', await client.get('otp:5678')); // 888888
+    console.log('OTP before expiry:', await client.get('otp:9101')); // 777777      
+
+    // wait for 5 seconds
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    console.log('OTP after expiry:', await client.get('otp:5678')); // null
     // wait for 11 seconds
     await new Promise(resolve => setTimeout(resolve, 11000));
     console.log('OTP after expiry:', await client.get('otp:1234')); // null
+
+    // wait for 15 more seconds
+    await new Promise(resolve => setTimeout(resolve, 15000));
+    console.log('OTP after expiry: ', await client.get('otp:9101')); // null
+    
 
     // QUIT the client connection
   await client.quit();
