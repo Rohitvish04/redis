@@ -47,7 +47,13 @@ async function main() {
     await new Promise(resolve => setTimeout(resolve, 6000));
     console.log('Temp after expiry:', await client.get('temp')); // null        
     
- 
+   // try incr command
+    await client.set('counter', '0');
+    await client.incr('counter');
+    await client.incr('counter');
+    console.log('Counter after 2 increments:', await client.get('counter')); // 2
+
+
     // QUIT the client connection
   await client.quit();
 }
