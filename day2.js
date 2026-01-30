@@ -73,6 +73,16 @@ async function main() {
 
 console.log(await client.hGetAll('user:1'));
 
+   // Mini Real World Example: Create a login session system
+
+    // On Login
+    await client.set('session:user1', 'active');
+    await client.expire('session:user1', 20); // Session expires in 20 seconds
+
+    // Check session status
+    console.log('Session status:', await client.get('session:user1')); // active
+
+
     // wait for 5 seconds
     await new Promise(resolve => setTimeout(resolve, 5000));
     console.log('OTP after expiry:', await client.get('otp:5678')); // null
