@@ -64,6 +64,15 @@ async function main() {
     console.log(await client.lPop('tasks')); // task2
     console.log(await client.lPop('tasks')); // task1
 
+  // Hashes (Objects) – user profiles, settings, metadata, store objects, etc.
+    await client.hSet('user:1', {
+  name: 'Alice',
+  age: 25,
+  city: 'London'
+});
+
+console.log(await client.hGetAll('user:1'));
+
     // wait for 5 seconds
     await new Promise(resolve => setTimeout(resolve, 5000));
     console.log('OTP after expiry:', await client.get('otp:5678')); // null
