@@ -18,6 +18,14 @@ async function main() {
 
   // practice commands here
  
+// String 
+    await client.set('user:1:name', 'Bob');
+    await client.set('user:1:email', 'alice@gmail.com');
+
+    console.log(await client.get('user:1:name')); // Bob
+    console.log(await client.get('user:1:email')); //
+    console.log(await client.get('user:2:name', 'rohit')); // rohit
+    console.log(await client.get('user:2:email', 'rohit@gmail.com')); //
 
 
     // QUIT the client connection
